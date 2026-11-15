@@ -1,5 +1,5 @@
 # ==============================================================================
-# Azal AI - Multi-Stage Production Dockerfile
+# Mizan AI - Multi-Stage Production Dockerfile
 # ==============================================================================
 
 # Stage 1: Build React 19 Frontend

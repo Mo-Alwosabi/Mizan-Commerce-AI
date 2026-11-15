@@ -20,10 +20,10 @@ from azure.ai.evaluation import (
 
 from agents.customer_agent import run_customer_agent
 
-AZURE_OPENAI_ENDPOINT = "https://azal-ai.openai.azure.com/"
+AZURE_OPENAI_ENDPOINT = "https://mizan-ai.openai.azure.com/"
 JUDGE_MODEL = "gpt-4o"
-SEARCH_ENDPOINT = "https://azal-ai.search.windows.net"
-INDEX_NAME = "azal-index"
+SEARCH_ENDPOINT = "https://mizan-ai.search.windows.net"
+INDEX_NAME = "mizan-index"
 DATASET_PATH = Path(__file__).parent / "dataset.jsonl"
 
 

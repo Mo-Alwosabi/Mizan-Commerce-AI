@@ -123,7 +123,7 @@ except (ImportError, Exception):
 
     SALES_SYSTEM_PROMPT = """أنت وكيل المبيعات والعروض والصفقات لمتجر ميزان اليمني للتجارة والتجزئة.
 العروض الحالية:
-- كود (AZAL2026): خصم 15% ترحيبي على أول طلب.
+- كود (Mizan2026): خصم 15% ترحيبي على أول طلب.
 - كود (ASAL10): خصم 10% عند طلب 2 كجم أو أكثر من العسل الدوعني الملكي.
 - باقة الضيافة اليمانية: (عسل دوعني 1 كجم + بن مطري 500 جم + مبخرة يمنية) بسعر 35,000 ريال بتوفير 25%.
 - التعليمات: اقترح العروض المناسبة والمنتجات المكملة بأسلوب تسويقي راقٍ."""
@@ -137,27 +137,27 @@ except (ImportError, Exception):
 
     def run_tracking_agent(query: str) -> dict[str, Any]:
         q = query.upper()
-        if "AZAL-8921" in q:
-            ans = "شحنتك رقم AZAL-8921 في الطريق حالياً مع شركة الأمانة للشحن متجهة إلى عدن - المنصورة (2 كجم عسل سدر دوعني + 1 كجم بن يافعي). موعد الوصول المتوقع هو غداً خلال 24 ساعة."
-            data = {"order_id": "AZAL-8921", "status": "في الطريق", "carrier": "شركة الأمانة للشحن", "destination": "عدن"}
-        elif "AZAL-7410" in q:
-            ans = "شحنتك رقم AZAL-7410 وصلت إلى مكتب مؤسسة الرويشان للنقل في المكلا - حضرموت، وهي جاهزة للاستلام الفوري الآن."
-            data = {"order_id": "AZAL-7410", "status": "جاهزة للاستلام", "carrier": "مؤسسة الرويشان للنقل", "destination": "المكلا"}
+        if "Mizan-8921" in q:
+            ans = "شحنتك رقم Mizan-8921 في الطريق حالياً مع شركة الأمانة للشحن متجهة إلى عدن - المنصورة (2 كجم عسل سدر دوعني + 1 كجم بن يافعي). موعد الوصول المتوقع هو غداً خلال 24 ساعة."
+            data = {"order_id": "Mizan-8921", "status": "في الطريق", "carrier": "شركة الأمانة للشحن", "destination": "عدن"}
+        elif "Mizan-7410" in q:
+            ans = "شحنتك رقم Mizan-7410 وصلت إلى مكتب مؤسسة الرويشان للنقل في المكلا - حضرموت، وهي جاهزة للاستلام الفوري الآن."
+            data = {"order_id": "Mizan-7410", "status": "جاهزة للاستلام", "carrier": "مؤسسة الرويشان للنقل", "destination": "المكلا"}
         else:
             llm_reply = chat_generate(TRACKING_SYSTEM_PROMPT, query)
-            ans = llm_reply if (llm_reply and not llm_reply.startswith("خطأ")) else "تم تسجيل طلب التتبع الخاص بك. يرجى تزويدنا برقم الطلب (مثل AZAL-8921) لنوافيك بموقع الشحنة الدقيق مع شركة الشحن."
+            ans = llm_reply if (llm_reply and not llm_reply.startswith("خطأ")) else "تم تسجيل طلب التتبع الخاص بك. يرجى تزويدنا برقم الطلب (مثل Mizan-8921) لنوافيك بموقع الشحنة الدقيق مع شركة الشحن."
             data = {"query": query, "status": "نشط"}
         return {"status": "ok", "answer": ans, "data": data}
 
     def run_sales_agent(query: str) -> dict[str, Any]:
         llm_reply = chat_generate(SALES_SYSTEM_PROMPT, query)
         if not llm_reply or llm_reply.startswith("خطأ"):
-            llm_reply = "يسعدنا تقديم أفضل عروض متجر ميزان! استخدم كود الخصم AZAL2026 للحصول على خصم 15% على طلبك، أو استفد من 'باقة الضيافة اليمانية' (عسل دوعني + بن مطري + مبخرة) بتوفير 25%."
+            llm_reply = "يسعدنا تقديم أفضل عروض متجر ميزان! استخدم كود الخصم Mizan2026 للحصول على خصم 15% على طلبك، أو استفد من 'باقة الضيافة اليمانية' (عسل دوعني + بن مطري + مبخرة) بتوفير 25%."
         return {
             "status": "ok",
             "answer": llm_reply,
             "active_coupons": [
-                {"code": "AZAL2026", "discount": "15%", "desc": "خصم ترحيبي على أول طلب"},
+                {"code": "Mizan2026", "discount": "15%", "desc": "خصم ترحيبي على أول طلب"},
                 {"code": "ASAL10", "discount": "10%", "desc": "خصم خاص على العسل الدوعني"},
             ],
         }
@@ -189,7 +189,7 @@ except (ImportError, Exception):
                 "tools_called": ["ask_compliance_agent"],
                 "thread_id": thread_id or "supervisor_session",
             }
-        elif any(w in m for w in ["تتبع", "شحن", "شحنتي", "طرد", "طلب رقم", "azal-", "اين وصل"]):
+        elif any(w in m for w in ["تتبع", "شحن", "شحنتي", "طرد", "طلب رقم", "mizan-", "اين وصل"]):
             res = run_tracking_agent(message)
             return {
                 "status": "ok",

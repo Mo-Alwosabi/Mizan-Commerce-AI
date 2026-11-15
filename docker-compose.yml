@@ -1,10 +1,10 @@
 services:
-  azal-ai:
+  mizan-ai:
     build:
       context: .
       dockerfile: Dockerfile
-    image: azal-ai:latest
-    container_name: azal-ai-platform
+    image: mizan-ai:latest
+    container_name: mizan-ai-platform
     restart: unless-stopped
     ports:
       - "8000:8000"

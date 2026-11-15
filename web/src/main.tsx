@@ -129,7 +129,7 @@ export interface Coupon {
 
 function getInitialStore(): StoreCustomization {
   try {
-    const raw = localStorage.getItem("azal_store_settings");
+    const raw = localStorage.getItem("mizan_store_settings");
     if (raw) return { ...DEFAULT_STORE, ...JSON.parse(raw) };
   } catch {}
   return DEFAULT_STORE;
@@ -137,23 +137,23 @@ function getInitialStore(): StoreCustomization {
 
 function getInitialShipments(): Shipment[] {
   try {
-    const raw = localStorage.getItem("azal_real_shipments");
+    const raw = localStorage.getItem("mizan_real_shipments");
     if (raw) return JSON.parse(raw);
   } catch {}
   // Real initial starter shipments
   return [
-    { id: "AZAL-8921", customer: "أحمد باوزير", dest: "عدن - المنصورة", carrier: "شركة الأمانة للشحن", status: "في الطريق", items: "2 كجم عسل سدر دوعني ملكي" },
-    { id: "AZAL-7410", customer: "فهد العريقي", dest: "صنعاء - حدة", carrier: "مؤسسة الرويشان", status: "تم التسليم", items: "باقة الضيافة اليمانية" },
+    { id: "Mizan-8921", customer: "أحمد باوزير", dest: "عدن - المنصورة", carrier: "شركة الأمانة للشحن", status: "في الطريق", items: "2 كجم عسل سدر دوعني ملكي" },
+    { id: "Mizan-7410", customer: "فهد العريقي", dest: "صنعاء - حدة", carrier: "مؤسسة الرويشان", status: "تم التسليم", items: "باقة الضيافة اليمانية" },
   ];
 }
 
 function getInitialCoupons(): Coupon[] {
   try {
-    const raw = localStorage.getItem("azal_real_coupons");
+    const raw = localStorage.getItem("mizan_real_coupons");
     if (raw) return JSON.parse(raw);
   } catch {}
   return [
-    { code: "AZAL2026", discount: "15% خصم", desc: "خصم ترحيبي لجميع العملاء الجدد" },
+    { code: "Mizan2026", discount: "15% خصم", desc: "خصم ترحيبي لجميع العملاء الجدد" },
     { code: "ASAL10", discount: "10% خصم", desc: "خصم حصري على العسل الدوعني الملكي" },
   ];
 }
@@ -574,7 +574,7 @@ function App() {
   const [store, setStore] = useState<StoreCustomization>(getInitialStore);
   const [shipments, setShipments] = useState<Shipment[]>(getInitialShipments);
   const [coupons, setCoupons] = useState<Coupon[]>(getInitialCoupons);
-  const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem("azal_theme") as Theme) || "light");
+  const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem("mizan_theme") as Theme) || "light");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [commandOpen, setCommandOpen] = useState(false);
 
@@ -591,7 +591,7 @@ function App() {
 
   useEffect(() => {
     document.body.className = `theme-${theme}`;
-    localStorage.setItem("azal_theme", theme);
+    localStorage.setItem("mizan_theme", theme);
   }, [theme]);
 
   useEffect(() => {
@@ -606,7 +606,7 @@ function App() {
       .then((res) => {
         if (res?.data?.storeName) {
           setStore(res.data);
-          localStorage.setItem("azal_store_settings", JSON.stringify(res.data));
+          localStorage.setItem("mizan_store_settings", JSON.stringify(res.data));
         }
       })
       .catch(() => {});
@@ -628,19 +628,19 @@ function App() {
 
   const updateStore = (next: StoreCustomization) => {
     setStore(next);
-    localStorage.setItem("azal_store_settings", JSON.stringify(next));
+    localStorage.setItem("mizan_store_settings", JSON.stringify(next));
     saveBackendStoreSettings(next).catch(() => {});
     showToast("تم حفظ إعدادات وهوية المتجر وتحديث الذكاء الاصطناعي بنجاح!");
   };
 
   const saveShipments = (list: Shipment[]) => {
     setShipments(list);
-    localStorage.setItem("azal_real_shipments", JSON.stringify(list));
+    localStorage.setItem("mizan_real_shipments", JSON.stringify(list));
   };
 
   const saveCoupons = (list: Coupon[]) => {
     setCoupons(list);
-    localStorage.setItem("azal_real_coupons", JSON.stringify(list));
+    localStorage.setItem("mizan_real_coupons", JSON.stringify(list));
   };
 
   return (
@@ -1151,7 +1151,7 @@ function AssistantCopilot({ store, showToast }: { store: StoreCustomization; sho
   const [loading, setLoading] = useState(false);
 
   const starters = [
-    `أين وصلت شحنتي رقم AZAL-8921 في عدن؟`,
+    `أين وصلت شحنتي رقم Mizan-8921 في عدن؟`,
     `ما هي كوبونات الخصم المتوفرة في المتجر اليوم؟`,
     `كيف يمكنني سداد قيمة الطلب عبر بنك الكريمي أو تطبيق جيب؟`,
     `ما هي سياسة استرجاع واستبدال المنتجات لديكم؟`,
@@ -1425,7 +1425,7 @@ function LogisticsHub({
 
   // New Shipment State
   const [showAdd, setShowAdd] = useState(false);
-  const [newId, setNewId] = useState(`AZAL-${Math.floor(1000 + Math.random() * 9000)}`);
+  const [newId, setNewId] = useState(`Mizan-${Math.floor(1000 + Math.random() * 9000)}`);
   const [newCustomer, setNewCustomer] = useState("");
   const [newDest, setNewDest] = useState("صنعاء");
   const [newCarrier, setNewCarrier] = useState("شركة الأمانة للشحن");
@@ -1471,7 +1471,7 @@ function LogisticsHub({
     setShowAdd(false);
     setNewCustomer("");
     setNewItems("");
-    setNewId(`AZAL-${Math.floor(1000 + Math.random() * 9000)}`);
+    setNewId(`Mizan-${Math.floor(1000 + Math.random() * 9000)}`);
     showToast(`تمت إضافة الشحنة (${created.id}) بنجاح!`);
     handleTrack(created.id);
   };
@@ -1551,7 +1551,7 @@ function LogisticsHub({
           <input
             value={orderQuery}
             onChange={(e) => setOrderQuery(e.target.value)}
-            placeholder="أدخل رقم الشحنة للاستعلام عنها (مثال: AZAL-8921)..."
+            placeholder="أدخل رقم الشحنة للاستعلام عنها (مثال: Mizan-8921)..."
             onKeyDown={(e) => e.key === "Enter" && handleTrack()}
           />
           <button className="saas-btn-primary" onClick={() => handleTrack()} disabled={loading || !orderQuery.trim()}>

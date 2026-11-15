@@ -1,5 +1,5 @@
 # ==============================================================================
-# Azal AI - Autonomous Multi-Agent Operating System for E-Commerce & Retail
+# Mizan AI - Autonomous Multi-Agent Operating System for E-Commerce & Retail
 # Backend Dependencies
 # ==============================================================================
 
